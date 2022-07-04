@@ -1,34 +1,23 @@
 <template>
-<div id="app">
-    <top-navbar id="top-navbar"></top-navbar>
-    <div class="screen" id="screen">
-        <div 
-            v-for="window in windows" 
-            :key="window.key" 
-            :aria-label="window.displayName"
-        >
-            <component
-                :is="window.windowComponent" 
-                :nameOfWindow="window.windowId" 
-                :content_padding_bottom="window.windowContentPadding['bottom']"
-                :content_padding_left="window.windowContentPadding['left']"
-                :content_padding_right="window.windowContentPadding['right']"
-                :content_padding_top="window.windowContentPadding['top']"
-                :id="window.windowId" 
-                :style="{position: window.position, left: window.positionX, top: window.positionY}" 
-                v-if="windowCheck(window.windowId)"
-            >
-                <component 
-                    :is="window.windowContent"
-                    slot="content"
-                >
+    <div id="app">
+        <top-navbar id="top-navbar"></top-navbar>
+        <div class="screen" id="screen">
+            <div v-for="window in windows" :key="window.key" :aria-label="window.displayName">
+                <component :is="window.windowComponent" :nameOfWindow="window.windowId"
+                    :content_padding_bottom="window.windowContentPadding['bottom']"
+                    :content_padding_left="window.windowContentPadding['left']"
+                    :content_padding_right="window.windowContentPadding['right']"
+                    :content_padding_top="window.windowContentPadding['top']" :id="window.windowId"
+                    :style="{ position: window.position, left: window.positionX, top: window.positionY }"
+                    v-if="windowCheck(window.windowId)">
+                    <component :is="window.windowContent" slot="content">
+                    </component>
                 </component>
-            </component>
+            </div>
+            <app-grid></app-grid>
         </div>
-        <app-grid></app-grid>
+        <navbar id="navbar" />
     </div>
-    <navbar id="navbar" />
-</div>
 </template>
 
 <script>
@@ -36,7 +25,7 @@
     Import Components, you can change the path for different
     component themes (blueprint, windows, macos)
 \*------------------------------------------------------------*/
-import Navbar from './components/blueprint/Navbar'
+// import Navbar from './components/blueprint/Navbar'
 // import TopNavbar from './components/macos/TopNavbar.vue'
 import Window from './components/template/Window'
 import AppGrid from './components/AppGrid'
@@ -46,6 +35,9 @@ import OSWindow from './components/template/OSWindow'
 import Blueprint from './components/views/Blueprint'
 import Windows from './components/views/Windows.vue'
 import MacOS from './components/views/MacOS.vue'
+import ResumeWindowContent from './components/views/ResumeWindowContent'
+import SpecialWindows from './components/template/SpecialWindows'
+import Navbar from './components/windows/Navbar'
 export default {
     name: 'App',
     data: function () {
@@ -63,7 +55,9 @@ export default {
         OSWindow,
         Blueprint,
         Windows,
-        MacOS
+        MacOS,
+        ResumeWindowContent,
+        SpecialWindows
         // TopNavbar,
     },
     computed: {
@@ -124,9 +118,12 @@ export default {
     Change 'blueprint' to 'windows' or 'macos' to use windows or macos theme
 \*---------------------------------------------------------------------------*/
 @import './assets/css/utils/normalize.css';
-@import './assets/css/blueprint/app.css';
+/* @import './assets/css/blueprint/app.css';
 @import './assets/css/blueprint/window.css';
-@import './assets/css/blueprint/appgrid.css';
+@import './assets/css/blueprint/appgrid.css'; */
+@import './assets/css/windows/app.css';
+@import './assets/css/windows/window.css';
+@import './assets/css/windows/appgrid.css';
 
 /*-------------------------------------------*\
     Utilities
@@ -151,6 +148,17 @@ html {
     width: 100%;
     position: relative;
     z-index: 999;
+}
+
+.window {
+    min-height: 80vh !important;
+    min-width: 50vw !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    /* --content-padding-left: 0% !important;
+    --content-padding-right: 0% !important;
+    --content-padding-top: 0% !important;
+    --content-padding-bottom: 0% !important; */
 }
 
 /*-------------------------------------------*\

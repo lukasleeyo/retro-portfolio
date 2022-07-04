@@ -1,19 +1,21 @@
 <template>
-<interact draggable :dragOption="dragOption" resizable :resizeOption="resizeOption" class="window window-style" :style="style" @dragmove="dragmove" @resizemove="resizemove" @click.native="setActiveWindow" :class="{ fullscreen: $store.getters.getWindowFullscreen(this.ComponentName), minimize: $store.getters.getWindowById(ComponentName).windowState=='minimize'}">
-    <div class="top-bar" id="top-bar" @dblclick="toggleWindowSize">
-        <h3 class="window-name">{{this.window.displayName}}</h3>
-        <div class="triple-button">
-            <button class="minimize-button button" @click="minimizeWindow"></button>
-            <button class="expand-button button" @click="toggleWindowSize"></button>
-            <button class="close-button button" @click="closeWindow"></button>
+    <interact draggable :dragOption="dragOption" resizable :resizeOption="resizeOption" class="window window-style"
+        :style="style" @dragmove="dragmove" @resizemove="resizemove" @click.native="setActiveWindow"
+        :class="{ fullscreen: $store.getters.getWindowFullscreen(this.ComponentName), minimize: $store.getters.getWindowById(ComponentName).windowState=='minimize'}">
+        <div class="top-bar" id="top-bar" @dblclick="toggleWindowSize">
+            <h3 class="window-name">{{this.window.displayName}}</h3>
+            <div class="triple-button">
+                <button class="expand-button button" @click="toggleWindowSize"></button>
+                <button class="minimize-button button" @click="minimizeWindow"></button>
+                <button class="close-button button" @click="closeWindow"></button>
+            </div>
         </div>
-    </div>
-    <div class="content">
-        <slot class="window-content" name="content">
-            
-        </slot>
-    </div>
-</interact>
+        <div class="content">
+            <slot class="window-content" name="content">
+                <p>This is my new custom window</p>
+            </slot>
+        </div>
+    </interact>
 </template>
 
 <style scoped>
@@ -53,6 +55,10 @@
     padding-left: var(--content-padding-left);
     padding-top: var(--content-padding-top);
     padding-bottom: var(--content-padding-bottom);
+}
+
+.top-bar {
+     background-color: green !important;
 }
 </style>
 
